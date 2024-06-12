@@ -1,0 +1,47 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ./wait-for-it.sh db:5432 -- ./entrypoint.sh
+    env_file:
+      - ./.env
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    develop:
+      watch: 
+       - action: rebuild
+         path: ./Pipfile
+       - action: rebuild
+         path: ./Pipfile.lock
+       - action: rebuild
+         path: . 
+         target: /app
+
+  db:
+    image: postgres
+    env_file:
+      - ./.env
+    restart: always
+    user: postgres 
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=${SQL_HOST_AUTH_METHOD}
+      - POSTGRES_DB=${SQL_DATABASE}
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
+      - POSTGRES_PORT=${SQL_PORT}
+    expose:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  db-data:
+

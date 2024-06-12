@@ -10,13 +10,11 @@ pillow = "*"
 djangorestframework = "*"
 drf-nested-routers = "*"
 django-filter = "*"
-python-dotenv = "*"
 drf-spectacular = "*"
-coverage = "*"
 python-decouple = "*"
-psycopg2-binary = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
+psycopg = {extras = ["binary"], version = "*"}
 
 [dev-packages]
 

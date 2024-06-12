@@ -8,9 +8,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = True
+DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -65,12 +65,12 @@ WSGI_APPLICATION = 'blogapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRES_NAME'),
-        'USER': config('POSTGRES_USER'),
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': config('POSTGRES_HOST'),
-        'PORT': config('POSTGRES_PORT')
+        'ENGINE': config('SQL_ENGINE'),
+        'NAME': config('SQL_DATABASE'),
+        'USER': config('SQL_USER'),
+        'PASSWORD': config('SQL_PASSWORD'),
+        'HOST': config('SQL_HOST'),
+        'PORT': config('SQL_PORT')
     }
 }
 
